@@ -67,7 +67,12 @@ return {
     local function open_dashboard()
       close_floating_windows()
       pcall(vim.cmd, "silent only")
-      vim.cmd.Alpha()
+      vim.schedule(function()
+        if vim.bo.filetype == "alpha" then
+          vim.cmd("enew")
+        end
+        vim.cmd.Alpha()
+      end)
     end
 
     vim.keymap.set("n", "<leader>a", open_dashboard, { desc = "Return to dashboard", silent = true })
